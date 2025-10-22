@@ -1,4 +1,5 @@
 import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
+import { CategoryValidatorFactory } from '@/category/domain/category.validator.ts'
 
 export type CategoryConstructorProps = {
   category_id?: Uuid
@@ -46,6 +47,11 @@ export class Category {
 
   deactivate(): void {
     this.is_active = false
+  }
+
+  static validate(entity: Category) {
+    const validator = CategoryValidatorFactory.create()
+    return validator.validate(entity)
   }
 
   toJSON() {

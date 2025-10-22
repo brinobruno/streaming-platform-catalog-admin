@@ -1,4 +1,4 @@
-import { Category } from "@/domain/category.entity.ts"
+import { Category } from "@/category/domain/category.entity.ts"
 import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
 
 describe('Category Unit Tests', () => {
