@@ -1,7 +1,13 @@
 import { Category } from "@/category/domain/category.entity.ts"
 import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
+import { jest } from '@jest/globals'
 
 describe('Category Unit Tests', () => {
+  let validateSpy: jest.SpiedFunction<typeof Category.validate>
+  beforeEach(() => {
+    validateSpy = jest.spyOn(Category, 'validate')
+  })
+  
   describe('constructor', () => {
     it('should construct instance of Category passing name', () => {
       const category = new Category({
@@ -67,6 +73,7 @@ describe('Category Unit Tests', () => {
       expect(category.is_active).toBe(true)
       expect(category.created_at).toBeInstanceOf(Date)
       expect(category.updated_at).toBeNull()
+      expect(validateSpy).toHaveBeenCalledTimes(1)
     })
 
     it('should create instance of Category with description', () => {
@@ -76,6 +83,7 @@ describe('Category Unit Tests', () => {
       })
 
       expect(category.description).toBe('Category 1 description')
+      expect(validateSpy).toHaveBeenCalledTimes(1)
     })
 
     it('should create instance of Category with is_active', () => {
@@ -85,6 +93,7 @@ describe('Category Unit Tests', () => {
       })
 
       expect(category.is_active).toBe(false)
+      expect(validateSpy).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -120,6 +129,7 @@ describe('Category Unit Tests', () => {
 
       category.changeName('Category 2')
       expect(category.name).toBe('Category 2')
+      expect(validateSpy).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -131,6 +141,7 @@ describe('Category Unit Tests', () => {
 
       category.activate()
       expect(category.is_active).toBe(true)
+      expect(validateSpy).toHaveBeenCalledTimes(1)
     })
 
     it('should deactivate Category', () => {
@@ -140,6 +151,7 @@ describe('Category Unit Tests', () => {
 
       category.deactivate()
       expect(category.is_active).toBe(false)
+      expect(validateSpy).toHaveBeenCalledTimes(1)
     })
   })
 
