@@ -28,4 +28,17 @@ describe('Uuid unit tests', () => {
       expect(validateSpy).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('create', () => {
+    it('should create a valid uuid', () => {
+      const uuid = Uuid.create()
+      expect(uuid.id).toBeDefined()
+      expect(validateSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('should create a valid uuid when a valid uuid is provided', () => {
+      const validUuid = '123e4567-e89b-12d3-a456-426614174000'
+      const uuid = Uuid.create(validUuid)
+    })
+  })
 })

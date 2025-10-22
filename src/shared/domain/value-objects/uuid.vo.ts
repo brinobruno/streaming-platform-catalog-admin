@@ -20,6 +20,10 @@ export class Uuid extends ValueObject {
       throw new InvalidUuidError()
     }
   }
+
+  static create(value?: string): Uuid {
+    return new Uuid(value)
+  }
 }
 
 export class InvalidUuidError extends Error {

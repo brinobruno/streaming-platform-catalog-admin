@@ -1,5 +1,7 @@
+import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
+
 export type CategoryConstructorProps = {
-  category_id?: string
+  category_id?: Uuid
   name: string
   description?: string | null
   is_active?: boolean
@@ -14,7 +16,7 @@ export type CategoryCreateCommand = {
 }
 
 export class Category {
-  category_id: string
+  category_id: Uuid
   name: string
   description: string | null
   is_active: boolean
@@ -22,7 +24,7 @@ export class Category {
   updated_at: Date | null
 
   constructor(props: CategoryConstructorProps) {
-    this.category_id = props.category_id ?? Math.random().toString(36) // temp
+    this.category_id = props.category_id ?? Uuid.create()
     this.name = props.name
     this.description = props.description ?? null
     this.is_active = props.is_active ?? true
