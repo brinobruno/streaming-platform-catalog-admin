@@ -1,5 +1,6 @@
 import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
 import { CategoryValidatorFactory } from '@/category/domain/category.validator.ts'
+import { EntityValidationError } from "@/shared/domain/validators/validation.error.ts"
 
 export type CategoryConstructorProps = {
   category_id?: Uuid
@@ -59,7 +60,10 @@ export class Category {
 
   static validate(entity: Category) {
     const validator = CategoryValidatorFactory.create()
-    return validator.validate(entity)
+    const isValid = validator.validate(entity)
+    if (!isValid) {
+      throw new EntityValidationError(validator.errors)
+    }
   }
 
   toJSON() {

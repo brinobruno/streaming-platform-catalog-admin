@@ -1,4 +1,5 @@
 import { Category } from "@/category/domain/category.entity.ts"
+import { EntityValidationError } from "@/shared/domain/validators/validation.error.ts"
 import { Uuid } from "@/shared/domain/value-objects/uuid.vo.ts"
 import { jest } from '@jest/globals'
 
@@ -169,6 +170,47 @@ describe('Category Unit Tests', () => {
         is_active: category.is_active,
         created_at: category.created_at,
         updated_at: category.updated_at,
+      })
+    })
+  })
+})
+
+describe('Category Validator', () => {
+  describe('create', () => {
+    it('should throw error if name is null', () => {
+      expect(() => Category.create({ name: null })).containsErrorMessages({
+        name: [
+          'name must be a string', 
+          'name should not be empty', 
+          'name must be shorter than or equal to 255 characters'
+        ],
+      })
+    })
+
+    it('should throw error if name is undefined', () => {
+      expect(() => Category.create({ name: undefined })).containsErrorMessages({
+        name: [
+          'name must be a string', 
+          'name should not be empty', 
+          'name must be shorter than or equal to 255 characters'
+        ],
+      })
+    })
+
+    it('should throw error if name is not a string', () => {
+      expect(() => Category.create({ name: 1 as any })).containsErrorMessages({
+        name: [
+          'name must be a string',
+          'name must be shorter than or equal to 255 characters'
+        ],
+      })
+    })
+
+    it('should throw error if name is greater than 255 characters', () => {
+      expect(() => Category.create({ name: 'a'.repeat(256) })).containsErrorMessages({
+        name: [
+          'name must be shorter than or equal to 255 characters'
+        ],
       })
     })
   })

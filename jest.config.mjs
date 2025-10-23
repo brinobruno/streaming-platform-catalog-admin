@@ -21,6 +21,7 @@ const config = {
       useESM: true
     }],
   },
+  setupFilesAfterEnv: ['<rootDir>/src/shared/infra/testing/except-helpers.ts'],
 };
 
 export default config;
