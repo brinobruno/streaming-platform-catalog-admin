@@ -21,6 +21,10 @@ export class Uuid extends ValueObject {
     }
   }
 
+  toString(): string {
+    return this.id
+  }
+
   static create(value?: string): Uuid {
     return new Uuid(value)
   }
